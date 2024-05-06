@@ -46,6 +46,9 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # Enable Qtile Window Manager
+  # services.xserver.windowManager.qtile.enable = true;
+
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -65,12 +68,19 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
    services.xserver.libinput.enable = true;
+  
+  #installing docker 
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+  enable = true;
+  setSocketVariable = true;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.machine = {
     isNormalUser = true;
     description = "machine";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -106,19 +116,7 @@
 #xdg.portal.enable = true;
 #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-fonts = {
-        enableDefaultPackages = true;
-        fontDir.enable = true;
-
-        packages = with pkgs; [
-            (nerdfonts.override { fonts = [
-                "SpaceMono" 
-                "JetBrainsMono"
-                "DejaVuSansMono"
-             ]; })
-        ];
-    };
-  # Allow unfree packages
+# Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
@@ -129,11 +127,15 @@ fonts = {
     starship #customizable terminal prompt for any shell
     brave # brave browser
     rustup #Rust toolchain Installer
+    openssl #libssl 
+    openssl_3_1
     pkg-config #required by openssl crate rust
     nodejs_20 #nodejs lts 
     python3 #python programming language
     go # Go programming language
     libgccjit #Gnu compiler collection  
+    clang
+    llvmPackages.bintools
     git #Version control
     gh #github cli tool
     htop #process viewer

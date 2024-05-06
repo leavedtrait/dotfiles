@@ -1,0 +1,55 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "margin-top": 15,
+    "modules-left": ["battery", "pulseaudio", "backlight"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["network", "clock"],
+
+    "battery": {
+        "format": "battery: {capacity}%",
+        "format-charging": "charging: {capacity}%"
+    },
+    "clock": {
+        "format": "{:%I:%M %p}",
+        "format-alt": "{:%a, %d. %b  %I:%M %p}"
+    },
+    "pulseaudio": {
+        "format": "vol: {volume}%",
+        "format-bluetooth": "blu: {volume}%",
+        "format-muted": "vol: muted",
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "ignored-sinks": ["Easy Effects Sink"]
+    },
+    "network": {
+        "interface": "wlo1",
+        "format": "{ifname}",
+        "format-wifi": "wlo1: {essid}",
+        "format-ethernet": "eno1: {ipaddr}/{cidr}",
+        "format-disconnected": "wlo1: disconnected",
+        "max-length": 50
+    },
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10"
+        },
+        "sort-by-number": true
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "bl: {percent}%"
+    }
+}
