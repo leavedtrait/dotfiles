@@ -68,13 +68,6 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
    services.xserver.libinput.enable = true;
-  
-  #installing docker 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.rootless = {
-  enable = true;
-  setSocketVariable = true;
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.machine = {
@@ -89,6 +82,9 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+  # installing steam o nixos
+  programs.steam.enable = true;
+
   #enabling and installing hyprland
   programs.hyprland = {
    enable = true;
@@ -102,19 +98,13 @@
    NIXOS_OZONE_WL = "1";
   };
 
-  hardware = {
-      #Opengl
-      opengl.enable = true;
-
-      #Most wayland compositors need this
-      #nvidia.modesetting.enable = true;
+#enabling gpu support
+   hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
   };
 
-
-
-#XDG portal
-#xdg.portal.enable = true;
-#xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
 # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -122,13 +112,17 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+
+    ### terminal utilities
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    starship #customizable terminal prompt for any shell
-    brave # brave browser
+    wget #
+    git #Version control
+    gh #github cli tool
+
+
+    ## Programming stuff
     rustup #Rust toolchain Installer
     openssl #libssl 
-    openssl_3_1
     pkg-config #required by openssl crate rust
     nodejs_20 #nodejs lts 
     python3 #python programming language
@@ -136,23 +130,33 @@
     libgccjit #Gnu compiler collection  
     clang
     llvmPackages.bintools
-    git #Version control
-    gh #github cli tool
-    htop #process viewer
-    vscode #code editor
-    neovim #editor
-    #waybar
-   (waybar.overrideAttrs (oldAttrs: {
+    
+    
+    
+    ##Virtual machine stuff 
+    bottles #wine bottles manager
+    gnome.gnome-boxes #
+
+
+    ###window manager and everything in my .config folder
+    (waybar.overrideAttrs (oldAttrs: { #waybar
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    })
-   )
+      })
+    )
     neofetch
+    starship #customizable terminal prompt for any shell
     kitty # terminal
     rofi-wayland #app launcher
-    wofi #
     hyprpaper #wayland wallpaper utility
+    
+
+    ### apps and browsers
+    brave # brave browser
     discord
     telegram-desktop
+    neovim #editor
+    htop #process viewer
+    vscode #code editor
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
