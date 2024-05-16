@@ -69,11 +69,15 @@
   # Enable touchpad support (enabled default in most desktopManager).
    services.xserver.libinput.enable = true;
 
+   #enable virtualization
+   virtualisation.libvirtd.enable = true;
+   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.machine = {
     isNormalUser = true;
     description = "machine";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -118,6 +122,7 @@
     wget #
     git #Version control
     gh #github cli tool
+    nerdfonts #nerdfonts
 
 
     ## Programming stuff
